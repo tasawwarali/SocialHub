@@ -1,0 +1,128 @@
+﻿@model SocialHub.Models.Complain
+
+@{
+    ViewBag.Title = "Contact Us";
+}
+
+<script>
+
+    $(document).ready(function () {
+        $('#not').hide();
+        $('#UserName').change(function () {
+
+            var userName = $('#UserName').val();
+
+            if (userName != null)
+            {
+                if (userName == $('#unm').text())
+                {
+                    $('#not').show();
+                    $('#not').text("You can not Complain about yourself!!!");
+                }
+                else
+                {
+
+                    $.getJSON("/home/CheckUserName?UserName=" + userName, function (data) {
+
+                        if (data) {
+                            $('#not').hide();
+                            $('#submit').removeAttr("disabled");
+                        }
+                        else {
+                            $('#not').show();
+                            $('#not').text("UserName does not Exist!!!");
+                            $('#submit').attr("disabled", "disabled");
+                        }
+
+                    });
+                }
+
+            }
+
+        });
+
+    });
+
+
+
+
+
+
+
+
+</script>
+
+
+<p id="unm" hidden>@Session["username"]</p>
+
+
+          <div class="menu_nav">
+        <ul>
+          <li  ><a href="~/Home/Home">Home</a></li>
+          <li  ><a href="~/TimeLine/Index">Time Line</a></li>
+          <li  ><a href="~/Friends/Index">Friends</a></li>
+          
+          <li class="active" ><a href="~/ContactUs/Index">Contact Us</a></li>
+            <li><a href="~/Home/Logout"> Logout</a></li>
+        </ul>
+        <div class="clr"></div>
+      </div>
+
+
+
+
+
+
+
+      <div class="hbg"><img src="~/images/@(Session["username"].ToString()+"1.jpg")" width="923" height="291" alt="" /></div>
+    
+
+
+     <div>
+         <h1>Contact Us</h1>
+
+
+         <br />
+         <br />
+         <br />
+         <br />
+
+         <h2> Enter the User Name you want to Complain about!!! </h2>
+          <br />
+          <br />
+          <br />
+         <hr />
+         <br />
+         <br />
+         <br />
+         <br />
+
+       @using (Html.BeginForm("Index","ContactUs",FormMethod.Post))
+         {
+
+                         
+             <p id="not" style="color:red"><b> User Name does not exist!</b></p>
+             @Html.TextBoxFor(model => model.UserName, new { placeholder = "User Name", style="padding:10px ;  width:569px" })
+              <div style="color:red"> 
+             @Html.ValidationMessageFor(model => model.UserName)
+               </div>
+            <br /> 
+           
+           <br />
+           
+              @Html.TextAreaFor(model => model.complain1,new {rows="8", cols="80" , placeholder="Enter your complain here ..... max 500 letters",  style=" padding:9px"})
+           <div style="color:red"> 
+             @Html.ValidationMessageFor(model => model.complain1)
+               </div>
+
+           <br />
+            <br />
+           
+           <button id="submit" disabled="disabled" style="background-color: #4da6ff ; width:200px;color:white ;border: 2px solid #4da6ff ; padding:15px"  >Submit</button>
+
+
+         }
+
+         
+
+     </div>

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<SocialHub.Models.Complain>
+
+@{
+    ViewBag.Title = "Admin";
+}
+
+
+
+        <div class="menu_nav">
+        <ul>
+          <li class="active" ><a href="~/Admin/Index">Complains</a></li>
+          <li ><a href="~/Admin/deleteUser">Delete User</a></li>
+          <li  ><a href="~/Admin/logout">Logout</a></li>
+          
+
+
+        </ul>
+        <div class="clr"></div>
+      </div>
+
+
+
+
+<br />
+<br />
+<br />
+<hr />
+
+<br />
+<br />
+<br />
+
+@foreach (var item in Model)
+{
+    <div style="border:1px solid grey; background-color:white;width:720px;padding:20px" >
+        <div>
+
+        <div style="padding:20px; display:inline-block ">
+            <img src="~/images/@(Html.DisplayFor(modelItem => item.Complainer)+"0.jpg")" width="75" height="75" />
+            <h3 style="display:inline-block" >@Html.DisplayFor(modelItem => item.Complainer)</h3>
+        </div>
+
+        <h1 style="display:inline-block" >is Complaining About </h1>
+
+
+        <div style="padding:20px;display: inline-block;display:inline-block">
+            <img src="~/images/@(Html.DisplayFor(modelItem => item.UserName)+"0.jpg")" width="75" height="75" />
+           <h3 style="display:inline-block" > @Html.DisplayFor(modelItem => item.UserName) </h3>
+
+        </div>
+                
+
+
+        </div>  
+
+        <hr />
+        <br />
+        
+        <div>
+
+            <h2>Message!</h2>
+           <p style="font-size:15px; color:grey" > @Html.DisplayFor(modelItem => item.complain1) </p>
+
+        </div>
+
+
+    </div>
+    
+    <br /> 
+}

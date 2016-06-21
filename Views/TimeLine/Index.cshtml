@@ -1,0 +1,181 @@
+﻿@model SocialHub.Models.Post
+
+@{
+    ViewBag.Title = "Time Line";
+    String pi = Session["username"].ToString() + "0.jpg";
+}
+
+
+
+
+ @Scripts.Render("~/bundles/jquery")
+
+<script>
+
+
+    $(document).ready(function () {
+
+        var pic = $('#tak').text();
+
+        $(document).on('click', 'span', function (e) {
+            
+            var msg = $('#'+e.target.id+'msg').val();
+            
+            if(msg!=null)
+            {
+                $.getJSON("/Home/insertComment?PostId=" + e.target.id + "&CommentMsg=" + msg, function (data) {
+                    if (data)
+                    {
+                        
+                        $('#' + e.target.id + 'div').append(" <img style='display: inline-block' src='/images/" + pic + "' height='45' width='45' /> <div style='display: inline-block' > <p style='font-size:16px;font-family:Comic Sans MS;color:black' > " + msg + "</p></div><br/>");
+
+                        $('#' + e.target.id + 'msg').val(null);
+                    }
+
+                });
+            }
+        });
+
+    });
+
+</script>
+
+
+
+<p id="tak" hidden>@pi </p>
+
+           <div class="menu_nav">
+        <ul>
+          <li  ><a href="~/Home/Home">Home</a></li>
+          <li class="active" ><a href="~/TimeLine/Index">Time Line</a></li>
+          <li  ><a href="~/Friends/Index">Friends</a></li>
+          
+          <li><a href="~/ContactUs/Index">Contact Us</a></li>
+            <li><a href="~/Home/Logout"> Logout</a></li>
+        </ul>
+        <div class="clr"></div>
+      </div>
+
+         <h1 style="font-family:'Times New Roman'"> Hi</h1> <h2 style="font-family:'Comic Sans MS'"> @ViewBag.FullName!</h2><br />
+
+
+      <div class="hbg"><img id="coverPicture" src="~/images/@(Session["username"].ToString()+"1.jpg")" width="923" height="291" alt="~/images/cover_default.jpg" /></div>
+
+
+          <div>
+
+          
+        @using (Html.BeginForm("Home", "Home", FormMethod.Post, new {   }))
+        {
+            
+            <img id="profilePicture" src="~/images/@(Session["username"].ToString()+"0.jpg")" width="200" height="200" alt="~/images/profile_default.jpg" />
+
+            @Html.TextAreaFor(model => model.PostMsg,new {rows="8", cols="80" , placeholder="What's on your Mind.... Type Here....",  style="border: 2px solid #4da6ff; padding:9px"})
+           <div style="color:red"> 
+             @Html.ValidationMessageFor(model => model.PostMsg)
+               
+            <button style="background-color: #4da6ff ;margin-left:729px ; width:70px;color:white ;border: 2px solid #4da6ff ; padding:10px"  >Post</button>
+      
+                </div>
+                  }
+
+
+    </div>
+
+
+
+<br/>
+<br/>
+
+
+</div>
+
+
+
+
+<div class="main">
+    
+  <div class="main_resize">
+ <h1>Time Line</h1>
+    <div class="content">
+      <div class="content_bg">
+        <div class="mainbar">
+    
+
+
+
+
+
+
+
+            @{
+
+                List<SocialHub.Models.Post> po=ViewBag.Posts;
+
+                for (int i = po.Count - 1; i >= 0;i-- )
+                {
+                          <div class="article" style="border:  2px solid #4da6ff ;background-image:url(/images/Paper-Proselyte-Graphics.jpg); padding:15px ; width:740px">
+                
+       <img style="display: inline-block"  src="~/images/@(po[i].UserName + "0.jpg")" height="75" width="75" /> 
+             <div style="display: inline-block" > 
+                 <h2><b>@po[i].UserName</b></h2>                          
+            <p ><b>@po[i].Date</b></p>
+            </div>
+            <p style="font-size:18px; color:black ">@po[i].PostMsg </p>
+                              <hr>
+
+            @foreach (var c in ViewBag.Comments)
+            {
+                if (c.PostId == po[i].PostId)
+                {
+                     <img style="display: inline-block" src="~/images/@(c.UserName + "0.jpg")" height="45" width="45" />
+                      <div style="display: inline-block" >
+                        <p style="font-size:16px;font-family:Comic Sans MS;color:black" >@c.CommentMsg</p>
+                          </div>
+
+                       
+                <br/> 
+                }
+            }
+
+
+            <div id="@(po[i].PostId + "div")">
+
+            </div>
+
+          <img  src="~/images/@(Session["username"] + "0.jpg")" height="45" width="45" />
+
+
+            
+            <input id="@(po[i].PostId + "msg")"  type="text" style="padding:5px; display: inline-block; width:550px"  />
+
+             <span>
+            <button id="@(po[i].PostId)"  style="background-color: #4da6ff ; width:80px; display: inline-block; color:white ;border: 2px solid #4da6ff ; padding:7px"  >Comment</button>
+
+            </span>
+                
+
+            
+          </div>
+                <br/>
+                <br/>
+                }
+                
+                
+                
+                
+                
+                                }
+
+
+
+
+
+
+       </div>
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>

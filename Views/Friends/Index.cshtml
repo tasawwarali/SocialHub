@@ -1,0 +1,87 @@
+﻿@model IEnumerable<SocialHub.Models.User>
+
+@{
+    ViewBag.Title = "Friends";
+}
+
+
+           <div class="menu_nav">
+        <ul>
+          <li  ><a href="~/Home/Home">Home</a></li>
+          <li  ><a href="~/TimeLine/Index">Time Line</a></li>
+          <li class="active" ><a href="~/Friends/Index">Friends</a></li>
+          
+          <li><a href="~/ContactUs/Index">Contact Us</a></li>
+            <li><a href="~/Home/Logout"> Logout</a></li>
+        </ul>
+        <div class="clr"></div>
+      </div>
+
+<h1>Friends!</h1>
+<br /><br /><br />
+
+<style>
+table, th, td {
+    border: 2px solid #5aa3ed;
+    border-collapse: collapse;
+    color: #1b1d1e;
+        font-family:'Times New Roman';
+        font-size:15px;
+        text-align:center; 
+    vertical-align:middle;
+        
+}
+th, td {
+    padding: 5px;
+}
+    </style>
+
+
+@{
+    
+    int i=0;
+foreach (var item in Model)
+{
+    i++;
+    
+    
+       <div style="display:inline-block; border:2px solid #5387b9; background-color:white ;padding:23px ">
+
+            <img height="133" width="400" src="~/images/@(Html.DisplayFor(modelItem =>item.UserName)+"1.jpg")" /><br />
+       <img height="115" width="115" src="~/images/@(Html.DisplayFor(modelItem =>item.UserName)+"0.jpg")" />
+       <div style="display: inline-block">
+           <table>
+               <tr>
+                   <td ><b>User Name</b></td>
+                   <td><b>Name</b></td>
+                   <td><b>Gender</b></td>
+               </tr>
+               <tr>
+                   <td >@Html.DisplayFor(modelItem =>item.UserName) </td>
+                   <td>@(Html.DisplayFor(modelItem =>item.FirstName)+" "+Html.DisplayFor(modelItem =>item.LastName)) </td>
+                   <td>@Html.DisplayFor(modelItem =>item.Gender) </td>
+                   
+               </tr>
+           </table>
+           
+           </div>
+
+         </div>
+   
+    
+            
+    
+    if(i%2==0)
+    {
+        <br />
+    <br />
+    <hr />
+    <br />
+    <br />
+    }
+    
+}
+
+
+}
+       

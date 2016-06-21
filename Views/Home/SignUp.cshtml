@@ -1,0 +1,174 @@
+﻿@model SocialHub.Models.User
+@{
+    ViewBag.Title = "SignUp";
+}
+
+
+    <meta charset="UTF-8">
+  
+ @Scripts.Render("~/bundles/jquery")
+    <script>
+  
+       
+
+        $(document).ready(function () {
+         
+            $('#searchyolo').hide();
+
+            $('#UserName').change(function () {
+                var userName = $('#UserName').val();
+
+                if (userName != null)
+                {
+                    if (userName != "ADMINISTRATOR")
+                    {
+                        $('#result').removeAttr("style");
+                        $('#result').text("Please Wait... Checking....");
+
+                        $.getJSON("/home/CheckUserName?UserName=" + userName, function (data) {
+
+                            if (data) {
+                                $('#result').text("User already exists in database choose anoter one!");
+                                $('#result').attr("style", "color:red");
+
+                                $('#regiter').attr("disabled", "disabled");
+                            }
+                            else {
+                                $('#result').text("User Name is available.");
+                                $('#result').attr("style", "color:blue");
+                                $('#regiter').removeAttr("disabled");
+                            }
+                        });
+
+
+                    }
+                    else
+                    {
+                        $('#result').text("You cannot SignUp with this UserName Its for Official Use!!!");
+                        $('#result').attr("style", "color:brown");
+
+                        $('#regiter').attr("disabled", "disabled");
+                    }
+
+                }
+
+            });
+
+        });
+
+
+ </script>
+    <link rel="stylesheet" href="~/Content/boot.min.css" >
+
+        <link rel="stylesheet" href="~/Content/loginCss/style.css">
+
+    
+    
+    
+
+
+  <body>
+
+      <div class="wrapper">
+        
+        @using (Html.BeginForm("SignUp", "Home", FormMethod.Post, new { @class = "form-signin", enctype = "multipart/form-data" }))
+        {  
+            
+            
+   <h1 class="form-signin-heading">Please Sign Up!</h1>
+            
+       @Html.TextBoxFor(model => model.FirstName, new {@class="form-control", placeholder="First Name",  autofocus="" })
+            <div style="color:red"> 
+       @Html.ValidationMessageFor(model => model.FirstName) </div><br/>
+                
+       @Html.TextBoxFor(model => model.LastName, new {@class="form-control", placeholder="Last Name",  autofocus="" }) 
+            <div style="color:red"> 
+       @Html.ValidationMessageFor(model => model.LastName)</div><br/>
+            
+      
+       @Html.TextBoxFor(model => model.PhoneNo, new {@class="form-control", placeholder="Phone No.",  autofocus="" }) 
+            <div style="color:red"> 
+       @Html.ValidationMessageFor(model => model.PhoneNo)</div><br/>
+             <div class="form-control">
+         <label >Gender :</label>
+   
+           
+           @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>{
+               new SelectListItem{Text="Male",Value="Male"},
+               new SelectListItem{Text="Female",Value="Female"}
+           }, new { style="width:200px ; hight:30px ; padding:7px " })
+
+                 <div style="color:red"> 
+           @Html.ValidationMessageFor(model => model.Gender)
+               </div>
+           </div>
+        <br />
+
+     
+        
+              <div class="form-control">
+         <label >Secret Question :</label>
+   
+           
+    @Html.DropDownListFor(model => model.SecretQuestion, new List<SelectListItem>{
+               new SelectListItem{Text="Who's your Best Friend?",Value="Who's your Best Friend?"},
+               new SelectListItem{Text="What's your Favirout Movie?",Value="What's your Favirout Movie?"},
+               new SelectListItem{Text="What's your Favirout Game?",Value="What's your Favirout Game?"},
+               new SelectListItem{Text="What's your Nick Name?",Value="What's your Nick Name?"}
+
+
+           }, new { style="width:283px ; hight:30px ; padding:7px " })
+                  <div style="color:red"> 
+    @Html.ValidationMessageFor(model => model.SecretQuestion)
+</div>
+
+                   </div>
+        <br />
+                
+      @Html.TextBoxFor(model => model.SecretAnswer, new {@class="form-control", placeholder="Answer", autofocus="" }) 
+            <div style="color:red"> 
+      @Html.ValidationMessageFor(model => model.SecretAnswer)
+            </div>
+            <br/>
+       
+      @Html.TextBoxFor(model => model.UserName, new {@class="form-control", placeholder="User Name", autofocus="" })
+<div style="color:red">
+      @Html.ValidationMessageFor(model => model.UserName)  
+      </div>    
+          <label id="result" ></label>
+            <br />
+            
+
+
+       @Html.PasswordFor(model => model.Password, new {@class="form-control", placeholder="Password", autofocus="" }) 
+       <div style="color:red">     
+       @Html.ValidationMessageFor(model => model.Password)
+           </div>
+            
+       <br/>
+            
+      <div class="form-control"> 
+       <label>Upload Your Profile Picture :</label>
+        <input type="file" name="profile" />
+
+          <label>Upload Your Cover Picture :</label>
+        <input type="file" name="cover" />
+           
+          </div><br/> 
+            <br/>
+            
+      <button class="btn btn-lg btn-primary btn-block" disabled id="regiter" type="submit">Sign Up</button>   
+   
+        
+            
+        } 
+   
+
+  </div>
+    
+    
+    
+    
+    
+  </body>
+

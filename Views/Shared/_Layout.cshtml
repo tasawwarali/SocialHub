@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html style="background-image:url(/images/white_bridge-wallpaper-1366x768.jpg);background-attachment: fixed;">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>@ViewBag.Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="~/Content/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="~/Scripts/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="~/Scripts/js/script.js"></script>
+<script type="text/javascript" src="~/Scripts/js/cufon-yui.js"></script>
+<script type="text/javascript" src="~/Scripts/js/arial.js"></script>
+<script type="text/javascript" src="~/Scripts/js/cuf_run.js"></script>
+
+</head>
+<body>
+
+
+       <div class="header" >
+      <div class="logo">
+        <h1><a href="#"><span>Social</span>Hub<small>Connects People</small></a></h1>
+      </div>
+     
+
+
+           <div id="searchyolo" >
+ <div  class="search">
+        <form method="get" action="/Friends/Search">
+          <span>
+          <input type="text" placeholder="Search..." name="s" id="s" />
+          <input name="searchsubmit" type="image" src="~/images/search.gif" value="Go" id="searchsubmit" class="btn"  />
+         
+          </span>
+        </form>
+        <!--/searchform -->
+     <div class="clr"></div>
+            </div>
+
+
+
+           </div>
+      <div class="clr"></div>
+      
+
+
+    
+
+
+
+
+
+
+
+
+
+
+    @RenderBody()
+    <div class="footer">
+  <div class="footer_resize">
+   
+    <div class="clr"></div>
+  </div>
+</div>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

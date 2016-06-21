@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "Delete User";
+   
+}
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        $('#profile').hide();
+
+        $('#check').click(function () {
+
+            $('#result').removeAttr("style");
+            $('#result').text("Checking..... ");
+            
+            var userName = $('#username').val();
+
+            if (userName != null && userName!="ADMINISTRATOR")
+            {
+                
+
+                    $.getJSON("/Admin/CheckUserNameObj?UserName=" + userName, function (data) {
+
+                        if (data != null)
+                        {
+                            $('#result').removeAttr("style");
+                            $('#result').text("Result :");
+
+                            $('#un').text(userName);
+                            $('#fn').text(data);
+                            $('#pic').attr("src", "/images/" + userName + "0.jpg");
+                            $('#cover').attr("src", "/images/" + userName + "1.jpg");
+                            $('#uname').val(userName);
+                            $('#profile').show();
+                        
+                        }
+                        else
+                        {
+                            $('#result').attr("style","color:red");
+                            $('#result').text("User Name does not Exist!!!");
+                            $('#profile').hide();
+                        }
+                    });
+
+
+          
+
+            }
+         
+
+        });
+
+    });
+
+
+
+
+
+
+</script>
+
+
+
+
+
+        <div class="menu_nav">
+        <ul>
+          <li ><a href="~/Admin/Index">Complains</a></li>
+          <li class="active" ><a href="~/Admin/deleteUser">Delete User</a></li>
+          <li  ><a href="~/Admin/logout">Logout</a></li>
+          
+
+
+        </ul>
+        <div class="clr"></div>
+      </div>
+
+
+
+
+<br />
+<br />
+<br />
+<hr />
+
+<br />
+<br />
+<br />
+
+
+
+<div>
+    
+
+        <input type="text" id="username" placeholder="Enter UserName to be Deleted" style="padding:9px; width:450px"/>
+        <button id="check" style="background-color: #4da6ff  ; width:80px;color:white ;border: 2px solid #4da6ff ; padding:10px">Check</button>
+        <br />
+    <br />
+        <h1 id="result"></h1>
+    <br />
+
+</div>
+
+
+
+    <div id="profile" style=" border:1px solid grey;background-color:white; width:507px; padding:25px ">
+
+       <img height="170" width="490" id="cover"  /><br />
+       <img height="150" width="150" id="pic"  />
+       <div style="display: inline-block; width:250px; height:114px"  >
+
+          <h3 style="display:inline-block;color:#4da6ff" >UserName : </h3> <h2 id="un" style="display:inline-block"></h2>
+           <br />
+          <h3 style="display:inline-block;color:#4da6ff" >Full Name : </h3><h2 id="fn" style="display:inline-block"></h2>
+
+       </div>
+        <br />
+        <br />
+        <br />
+        <hr />
+        <br />
+        <br />
+
+        <form action="/Admin/deleteUserC" method="post">
+
+            <input name="UserName" id="uname" type="text" hidden="hidden" />
+            <button type="submit" style="background-color: #4da6ff  ; margin-left:160px; width:170px;color:white ;border: 2px solid #4da6ff ; padding:13px" >Delete</button>
+
+        </form>
+
+
+     </div>
+

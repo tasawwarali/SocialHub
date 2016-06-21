@@ -1,0 +1,107 @@
+﻿@model SocialHub.Models.User
+
+@{
+    ViewBag.Title = "Login";
+}
+
+
+
+    <meta charset="UTF-8">
+  
+ @Scripts.Render("~/bundles/jquery")
+    <script>
+  
+
+        
+        
+        $(document).ready(function () {
+            $('#searchyolo').hide();
+        });
+
+
+ </script>
+    <link rel="stylesheet" href="~/Content/boot.min.css" >
+
+        <link rel="stylesheet" href="~/Content/loginCss/style.css">
+
+    
+    
+    
+
+
+  <body>
+
+      <div class="wrapper">
+
+
+
+              
+   
+        
+      @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-signin" }))     
+      { 
+      <h1 class="form-signin-heading">Please Login!</h1>
+
+        
+       
+              
+                      if (ViewBag.msg == "wrongUsername" && ViewBag.msg != null)
+                  {
+                      <label style="color:red">User Name does not Exist!</label>
+                  }
+                  
+              
+              
+        
+       @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "User Name", autofocus = "" }) 
+          
+       <div style="color:red">   
+       @Html.ValidationMessageFor(model => model.UserName)
+           </div>
+           <br />
+          
+          
+                  
+                  
+                      if (ViewBag.msg == "wrongPassword" && ViewBag.msg != null)
+                      {
+                      <label style="color:red" >You Enter a wrong Password!</label>
+                      }
+                      else
+                      {
+                          <br/>
+                      }
+                  
+                 
+       @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password", autofocus = "" }) 
+        <div style="color:red">
+       @Html.ValidationMessageFor(model => model.Password)
+        </div>
+          <br/>
+      <label class="checkbox">
+        <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me        
+      </label>
+   
+          
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>   <br/>
+
+             @Html.ActionLink("Forgot Password","ForgetPassword","Home",null,new{style=" font-style: italic"})
+
+      }
+
+
+
+
+      @using (Html.BeginForm("SignUp", "Home", FormMethod.Get, new { @class = "form-signin" }))
+      {
+      
+          <button class="btn btn-lg btn-primary btn-block" type="submit" >Register</button>   
+        
+ }
+  </div>
+    
+    
+    
+    
+    
+  </body>
